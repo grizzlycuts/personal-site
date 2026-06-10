@@ -66,19 +66,21 @@
 .splash-show-base { position: absolute; inset: 0; z-index: 0; }
 .splash-show-frame {
   position: absolute; inset: 0; z-index: 1;
-  /* No pop on exit: base transform = ken-burns END scale, and both the zoom
-     animation and the exit transition are LINEAR, so when .active (and its
-     forwards animation) is removed the outgoing frame keeps drifting inward
-     at the same velocity instead of snapping back or changing speed. The
-     transform transition (8s) outlasts the 3.8s fade, so its slow tail is
-     never visible. The incoming reset to scale(1.04) lands at opacity 0. */
-  opacity: 0; transform: scale(1.18);
-  transition: opacity 3.8s var(--ease), transform 8s linear;
+  /* No size pop on crossfade: the ken-burns is a PAUSED animation that only
+     advances while .active (via animation-play-state), instead of being added
+     on .active and removed on exit. Removing a running animation reverts the
+     transform to its base value WITHOUT a transition (transitions don't fire
+     off an animated value) — that snap is the pop. Pausing instead FREEZES the
+     current scale, so the outgoing frame holds its size and just fades out;
+     re-activating resumes from the frozen scale, also pop-free. */
+  opacity: 0; transform: scale(1.08);
+  transition: opacity 3.8s var(--ease);
 }
 .splash-show-frame.active { opacity: 1; }
 .splash-show-frame image-slot { pointer-events: none; }
 @media (prefers-reduced-motion: no-preference) {
-  .splash-show-frame.active { animation: splash-kenburns 16s linear forwards; }
+  .splash-show-frame { transform: scale(1.04); animation: splash-kenburns 16s linear forwards paused; }
+  .splash-show-frame.active { animation-play-state: running; }
 }
 @keyframes splash-kenburns {
   from { transform: scale(1.04); }

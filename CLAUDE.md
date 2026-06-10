@@ -29,7 +29,7 @@ step — React UMD + Babel standalone in the browser).
 ## Cache-busting
 Every script/style in `index.html` is loaded with `?v=N`. **Bump the version
 whenever you edit that file** or a browser may serve a stale cached copy.
-Current: site.css v14, components.css v47, image-slot v13, data.js v20,
+Current: site.css v14, components.css v48, image-slot v13, data.js v20,
 tweaks-panel v7, components.jsx v24, pages-main.jsx v25, pages-sub.jsx v24,
 app.jsx v15.
 

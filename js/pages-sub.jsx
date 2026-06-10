@@ -97,7 +97,7 @@ function Album({ go, profile }) {
 
   return (
     <main className="page">
-      <PageHead kicker="Album">
+      <PageHead kicker="Photos">
       </PageHead>
       <section className="wrap-wide" style={{ paddingBottom: "clamp(60px,9vw,120px)" }}>
         <div className="album-grid">

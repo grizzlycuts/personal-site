@@ -29,18 +29,28 @@ step — React UMD + Babel standalone in the browser).
 ## Cache-busting
 Every script/style in `index.html` is loaded with `?v=N`. **Bump the version
 whenever you edit that file** or a browser may serve a stale cached copy.
-Current: site.css v14, components.css v29, image-slot v13, data.js v15,
-tweaks-panel v7, components.jsx v19, pages-main.jsx v22, pages-sub.jsx v17,
-app.jsx v14.
+Current: site.css v14, components.css v47, image-slot v13, data.js v20,
+tweaks-panel v7, components.jsx v24, pages-main.jsx v25, pages-sub.jsx v24,
+app.jsx v15.
 
 ## Active vs hidden pages (site under construction)
-Active nav: **Album · Now · Links · Contact**, with the splash as the landing.
-- `js/app.jsx` `ROUTES = ["splash", "album", "now", "links", "contact"]`.
+Active nav: **Photos · Films · Now · Links · Contact**, with the splash as the
+landing. Note the **route ids are unchanged** — the "Photos" tab routes to
+`album` and the "Films" tab routes to `projects`; only the display labels were
+renamed (keeps routing, deep links, and the `album-*`/`project-*` photo state
+files intact).
+- `js/app.jsx` `ROUTES = ["splash", "album", "projects", "now", "links", "contact"]`.
   **home / work / blog are hidden** (omitted from ROUTES) but their components
   stay mapped — re-add the ids to restore. Brand-logo + splash "Enter" go to
   `album`.
-- `js/components.jsx` `NAV` shows Album / Now / Links / Contact (hidden items
-  commented above).
+- `js/components.jsx` `NAV` shows Photos / Films / Now / Links / Contact
+  (`["album","Photos"]`, `["projects","Films"]`; hidden home/work/blog commented
+  above). The Album page header kicker reads "Photos" to match.
+
+## Films page (Projects)
+IMDb "Full list of credits" button sits in the `PageHead` and is **centered**
+(`.imdb-credits-link` in components.css: `display:flex; width:fit-content;
+margin:18px auto 0`). It's the sole user of that class.
 
 ## Photo storage (image-slot.js)
 Album + splash photos are user-filled `<image-slot>` components. Storage is

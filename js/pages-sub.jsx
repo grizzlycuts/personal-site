@@ -5,7 +5,7 @@ function PageHead({ kicker, title, lead, children }) {
   return (
     <header className="wrap-wide page-head">
       <span className="kicker reveal">{kicker}</span>
-      <h1 className="page-title reveal" style={{ marginTop: 18 }}>{title}</h1>
+      {title && <h1 className="page-title reveal" style={{ marginTop: 18 }}>{title}</h1>}
       {lead && <p className="lead reveal" style={{ marginTop: 22, maxWidth: "44ch" }}>{lead}</p>}
       {children}
     </header>
@@ -89,7 +89,7 @@ function Album({ go, profile }) {
   const photos = all;
   return (
     <main className="page">
-      <PageHead kicker="Album" title="Photography">
+      <PageHead kicker="Album">
       </PageHead>
       <section className="wrap-wide" style={{ paddingBottom: "clamp(60px,9vw,120px)" }}>
         <div className="album-grid">
@@ -117,8 +117,7 @@ function Now({ go, profile }) {
   return (
     <main className="page">
       <PageHead kicker={"Now · Updated " + new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })}
-        title="What I'm doing now"
-        lead="A living snapshot — what has my focus across the suite, the sky, and everything between." />
+        title="What I'm doing now" />
       <section className="wrap-wide" style={{ paddingBottom: "clamp(60px,9vw,120px)" }}>
         {window.SITE.now.map((n, i) => (
           <div className="now-grid reveal" key={i}>

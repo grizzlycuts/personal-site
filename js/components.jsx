@@ -225,7 +225,7 @@ function Nav({ route, go, profile, theme, toggleTheme }) {
     )}
     <header className="nav" style={onSplash ? { display: "none" } : {}}>
       <div className="wrap-wide nav-inner">
-        <div className="brand" onClick={() => go("album")}>
+        <div className="brand" onClick={() => go("splash")}>
           <div className="monogram">{profile.monogram}</div>
           <div>
             <div className="brand-name">{profile.name}</div>

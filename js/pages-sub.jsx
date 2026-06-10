@@ -218,7 +218,7 @@ function Projects({ go, profile }) {
   const profileUrl = window.SITE.imdbProfile;
   return (
     <main className="page">
-      <PageHead kicker="Projects">
+      <PageHead>
         <a className="imdb-credits-link reveal" href={profileUrl} target="_blank" rel="noopener noreferrer">
           <IconIMDb s={20} />
           <span>Full list of credits</span>

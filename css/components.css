@@ -134,8 +134,8 @@
 .splash.bg-dark .splash-body .social-btn:hover { background: var(--splash-fg); color: oklch(0.2 0.02 60); border-color: var(--splash-fg); }
 
 .splash-top { position: relative; z-index: 2; padding-top: 30px; }
-.splash-top .kicker { color: var(--accent); text-shadow: 0 2px 14px rgba(0,0,0,0.28); }
-.splash.bg-light .splash-top .kicker { text-shadow: none; }
+.splash-top .kicker { color: var(--accent); text-shadow: 1px 1px 0 rgba(0,0,0,0.75), 0 2px 10px rgba(0,0,0,0.45); }
+.splash.bg-light .splash-top .kicker { text-shadow: 1px 1px 0 rgba(0,0,0,0.55), 0 1px 6px rgba(0,0,0,0.3); }
 .splash-top-inner { display: flex; justify-content: space-between; align-items: center; }
 .splash-body { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; justify-content: flex-end; gap: clamp(16px, 2.4vh, 30px); padding-bottom: clamp(30px, 5vw, 70px); min-height: 0; }
 /* bottom-third cluster scaled to 60% (40% smaller), pinned to lower-left so it
@@ -148,14 +148,14 @@
   content: "";
   position: absolute;
   inset: -16px -22px;
-  background: oklch(0.11 0.014 52 / 0.58);
+  background: oklch(0.11 0.014 52 / 0.32);
   -webkit-backdrop-filter: blur(8px) saturate(0.88);
   backdrop-filter: blur(8px) saturate(0.88);
   border-radius: 18px;
-  /* mask fades to transparent at all edges — ellipse biased toward lower-left
-     where the cluster anchors (transform-origin: 0 100%) */
-  -webkit-mask-image: radial-gradient(ellipse 88% 82% at 28% 78%, black 32%, transparent 72%);
-  mask-image: radial-gradient(ellipse 88% 82% at 28% 78%, black 32%, transparent 72%);
+  /* ellipse biased toward upper-right core; left and bottom edges dissolve
+     much earlier so they barely register against the photo */
+  -webkit-mask-image: radial-gradient(ellipse 78% 72% at 42% 62%, black 18%, transparent 68%);
+  mask-image: radial-gradient(ellipse 78% 72% at 42% 62%, black 18%, transparent 68%);
   z-index: -1;
   transition: opacity 0.55s var(--ease);
 }
@@ -164,7 +164,7 @@
 .splash-role { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2); }
 .splash-role .dot { width: 7px; height: 7px; border-radius: 50%; }
 .splash-enter { position: relative; z-index: 2; padding-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-end; }
-.splash-tc { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--ink-3); display: inline-flex; align-items: center; gap: 8px; }
+.splash-tc { font-family: var(--mono); font-size: 12.1px; letter-spacing: 0.1em; color: var(--ink-3); display: inline-flex; align-items: center; gap: 8px; }
 .splash-tc .tc-digits { color: var(--ink-2); font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
 .splash-tc .tc-fps { color: var(--ink-3); }
 .splash-tc .tc-rec {

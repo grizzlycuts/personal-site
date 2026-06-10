@@ -147,8 +147,12 @@ function Splash({ go, profile, splash }) {
             ? <Slot id="splash-hero" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", aspectRatio: "auto" }} />
             : <div style={SKY} />)
           : <SplashSlideshow shots={availableShots} activeId={activeId} />}
-        <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: "26%",
-          background: "linear-gradient(to top, color-mix(in oklch, var(--bg) 30%, transparent), transparent)" }} />
+        {/* Cinematic vignette — dark bottom + left edge independent of theme,
+            so text is legible over any photo without relying solely on JS detection */}
+        <div style={{ position: "absolute", inset: 0, pointerEvents: "none",
+          background:
+            "linear-gradient(to top,  rgba(0,0,0,0.68) 0%, rgba(0,0,0,0.36) 22%, rgba(0,0,0,0.08) 52%, transparent 78%)," +
+            "linear-gradient(to right, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.08) 38%, transparent 65%)" }} />
       </div>
       <div className="splash-veil" />
 

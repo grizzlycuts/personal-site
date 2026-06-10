@@ -104,24 +104,25 @@
    JS samples the brightness of the photo behind the lower-left text cluster
    and tags .splash with .bg-dark (light type) or .bg-light (dark type). The
    --splash-fg vars + a soft legibility scrim cross-fade with the slideshow so
-   the name/roles/tagline never get lost against a busy frame. With no tag we
-   fall back to the theme ink (current look). */
+   the name/roles/tagline never get lost against a busy frame.
+   --splash-scrim is always-on (subtle) and strengthens on detected dark frames.
+   bg-light uses dark ink so no shadow is needed there. */
 .splash {
   --splash-fg:   var(--ink);
   --splash-fg-2: var(--ink-2);
   --splash-fg-3: var(--ink-3);
-  --splash-scrim: none;
+  --splash-scrim: 0 1px 3px rgba(0,0,0,0.30), 0 3px 20px rgba(0,0,0,0.20);
 }
 .splash.bg-dark {
-  --splash-fg:   oklch(0.91 0.012 85);
-  --splash-fg-2: oklch(0.83 0.012 85);
-  --splash-fg-3: oklch(0.73 0.012 85);
-  --splash-scrim: 0 1px 2px rgba(0,0,0,0.45), 0 2px 22px rgba(0,0,0,0.42);
+  --splash-fg:   oklch(0.93 0.010 85);
+  --splash-fg-2: oklch(0.85 0.010 85);
+  --splash-fg-3: oklch(0.74 0.010 85);
+  --splash-scrim: 0 1px 2px rgba(0,0,0,0.62), 0 2px 28px rgba(0,0,0,0.52);
 }
 .splash.bg-light {
-  --splash-fg:   oklch(0.33 0.018 60);
-  --splash-fg-2: oklch(0.43 0.016 60);
-  --splash-fg-3: oklch(0.52 0.014 62);
+  --splash-fg:   oklch(0.28 0.018 60);
+  --splash-fg-2: oklch(0.38 0.016 60);
+  --splash-fg-3: oklch(0.50 0.014 62);
   --splash-scrim: none;
 }
 .splash-name,

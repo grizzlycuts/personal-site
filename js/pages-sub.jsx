@@ -215,35 +215,36 @@ function Links({ go, profile }) {
 
 /* ---------------- PROJECTS ---------------- */
 function Projects({ go, profile }) {
+  const profileUrl = window.SITE.imdbProfile;
   return (
     <main className="page">
-      <PageHead kicker="Projects">
-        <p className="meta reveal" style={{ marginTop: 14, fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--ink-3)" }}>
-          Digital Intermediate Editor
-        </p>
-      </PageHead>
-      <section className="wrap-wide" style={{ paddingBottom: "clamp(60px,9vw,120px)" }}>
-        <div className="projects-grid">
-          {window.SITE.projects.map((p) => (
-            <a
-              key={p.id}
-              className="project-card"
-              href={"https://www.imdb.com/title/" + p.imdb + "/"}
-              target="_blank"
-              rel="noopener noreferrer"
-              title={p.title + " — IMDb"}
-            >
-              <div className="project-poster">
-                <Slot id={"project-" + p.id} ar="2 / 3" ph={p.title} />
-              </div>
-              <div className="project-info">
-                <div className="project-title serif">{p.title}</div>
-                <div className="project-year mono">{p.year}</div>
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
+      <PageHead kicker="Projects" />
+      {window.SITE.projectGroups.map((group, gi) => (
+        <section key={group.role} className="wrap-wide"
+          style={{ paddingTop: gi === 0 ? 0 : "clamp(20px,3vw,40px)", paddingBottom: "clamp(40px,7vw,90px)" }}>
+          <h2 className="project-role-head reveal">{group.role}</h2>
+          <div className="projects-grid">
+            {group.films.map((p) => (
+              <a
+                key={p.id}
+                className="project-card"
+                href={p.imdb ? "https://www.imdb.com/title/" + p.imdb + "/" : profileUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={p.title + " — IMDb"}
+              >
+                <div className="project-poster">
+                  <Slot id={"project-" + p.id} ar="2 / 3" ph={p.title} />
+                </div>
+                <div className="project-info">
+                  <div className="project-title serif">{p.title}</div>
+                  {p.year && <div className="project-year mono">{p.year}</div>}
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
       <Footer profile={profile} go={go} />
     </main>
   );

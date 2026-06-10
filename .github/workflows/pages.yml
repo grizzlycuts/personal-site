@@ -51,9 +51,6 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
-          # required: the photo sidecars + .nojekyll are dotfiles, which this
-          # action excludes by default since v4.0.0
-          include-hidden-files: true
 
       - name: Deploy to GitHub Pages
         id: deployment

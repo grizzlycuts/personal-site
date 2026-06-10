@@ -149,7 +149,7 @@ window.SITE = {
         { id: "rm-jam-master",    title: "ReMastered: Who Killed Jam Master Jay?",       year: "2018", imdb: "tt9046560"  },
         { id: "rm-sheriff",       title: "ReMastered: Who Shot the Sheriff?",            year: "2018", imdb: "tt9046548"  },
         { id: "year-of-the-scab", title: "Year of the Scab",                             year: "2017", imdb: "tt6794436"  },
-        { id: "hodges",           title: "Hodges Half Dozen",                            year: "" },
+        { id: "hodges",           title: "Hodges Half Dozen",                            year: "", imdb: "tt7891830"  },
         { id: "lost-memories",    title: "Lost Memories",                                year: "", imdb: "tt6791830"  },
         { id: "in-absentia",      title: "In Absentia",                                  year: "", imdb: "tt4917526"  },
         { id: "deadly-dance",     title: "A Deadly Dance",                               year: "", imdb: "tt5702314"  },

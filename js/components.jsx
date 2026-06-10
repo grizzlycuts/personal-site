@@ -311,5 +311,5 @@ function PostRow({ post, i, go }) {
 
 Object.assign(window, {
   Chevron, ArrowR, ColorBars, Placeholder, Slot, GradeReveal, Nav, Footer, PostRow, NAV, Timecode,
-  SocialIcons,
+  SocialIcons, IconIMDb,
 });

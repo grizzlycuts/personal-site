@@ -271,6 +271,30 @@
 .album-item-cap .t { font-family: var(--serif); font-size: 20px; color: oklch(0.96 0.01 80); }
 .album-item-cap .m { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; color: oklch(0.85 0.01 80); text-transform: uppercase; }
 
+/* projects — imdb credits link */
+.imdb-credits-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 18px;
+  font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-2); text-decoration: none;
+  padding: 8px 14px 8px 10px;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease),
+              background 0.3s var(--ease), box-shadow 0.3s var(--ease),
+              transform 0.3s var(--ease);
+}
+.imdb-credits-link:hover {
+  color: oklch(0.82 0.14 84);
+  border-color: oklch(0.82 0.14 84 / 0.55);
+  background: oklch(0.82 0.14 84 / 0.07);
+  box-shadow: 0 0 16px oklch(0.82 0.14 84 / 0.22);
+  transform: translateY(-1px);
+}
+.imdb-credits-link svg { flex-shrink: 0; transition: opacity 0.3s var(--ease); }
+.imdb-credits-link:hover svg { opacity: 0.95; }
+.imdb-credits-link .arrow { transition: transform 0.3s var(--ease); }
+.imdb-credits-link:hover .arrow { transform: translateX(3px); }
+
 /* projects grid */
 .project-role-head {
   font-family: var(--mono); font-size: 11px; font-weight: 500;

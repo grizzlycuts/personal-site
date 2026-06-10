@@ -161,10 +161,6 @@ function Splash({ go, profile, splash }) {
 
       <div className="wrap-wide splash-enter">
         <Timecode fps={24} />
-        <span className="scrollcue" onClick={() => go("album")}>
-          <span className="kicker">Enter</span>
-          <span className="chev"><Chevron d="down" s={18} /></span>
-        </span>
       </div>
     </section>
   );

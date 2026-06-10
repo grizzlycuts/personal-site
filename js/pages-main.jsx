@@ -134,7 +134,7 @@ function Splash({ go, profile, splash }) {
       <div className="wrap-wide splash-top">
         <div className="splash-top-inner">
           <span className="kicker">{profile.location} · EST. 2014</span>
-          <span className="kicker" style={{ opacity: 0.8 }}>Portfolio — Reel 2026</span>
+          <span className="kicker" style={{ opacity: 0.8 }}>PORTFOLIO - 2026</span>
         </div>
       </div>
 

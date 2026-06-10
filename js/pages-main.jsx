@@ -58,13 +58,13 @@ function regionBrightness(url) {
   });
 }
 
-function SplashSlideshow({ idx }) {
+function SplashSlideshow({ shots, activeId }) {
   return (
     <div className="splash-show">
       <div style={SKY} className="splash-show-base" />
-      {SPLASH_SHOTS.map((id, i) => (
-        <div className={"splash-show-frame" + (i === idx ? " active" : "")} key={id}>
-          <Slot id={id} ph="Drop a photo" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", aspectRatio: "auto" }} />
+      {shots.map((id) => (
+        <div className={"splash-show-frame" + (id === activeId ? " active" : "")} key={id}>
+          <Slot id={id} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", aspectRatio: "auto" }} />
         </div>
       ))}
     </div>
@@ -72,30 +72,49 @@ function SplashSlideshow({ idx }) {
 }
 
 function Splash({ go, profile, splash }) {
-  // a randomized play-order through the shots, shuffled once per mount
-  const order = useRef1(null);
-  if (!order.current) {
-    const a = SPLASH_SHOTS.map((_, i) => i);
+  const [, force] = useS1(0);
+  const [pos, setPos] = useS1(0);
+  const [tone, setTone] = useS1(null);
+  const orderRef = useRef1(null);
+  const prevNRef = useRef1(0);
+
+  // Subscribe so the component re-renders once the photo store loads
+  useE1(() => {
+    if (!window.imageSlotStore) return;
+    window.imageSlotStore.ensure();
+    return window.imageSlotStore.subscribe(() => force(n => n + 1));
+  }, []);
+
+  // Only cycle through shots that have a stored photo
+  const availableShots = SPLASH_SHOTS.filter(id =>
+    window.imageSlotStore && window.imageSlotStore.get(id)
+  );
+  const n = availableShots.length;
+
+  // Re-shuffle when the count of available shots changes
+  if (prevNRef.current !== n) {
+    prevNRef.current = n;
+    const a = availableShots.map((_, i) => i);
     for (let i = a.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [a[i], a[j]] = [a[j], a[i]];
     }
-    order.current = a;
+    orderRef.current = a;
   }
-  const [pos, setPos] = useS1(0);
-  const idx = order.current[pos];
-  const [tone, setTone] = useS1(null);
+
+  const activeId = n ? availableShots[orderRef.current[pos % n]] : null;
 
   // advance the background slideshow (held under reduced-motion)
   useE1(() => {
     if (splash === "photo") return;
+    if (!n) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const t = setInterval(() => setPos(p => (p + 1) % SPLASH_SHOTS.length), 5600);
+    const t = setInterval(() => setPos(p => (p + 1) % n), 5600);
     return () => clearInterval(t);
-  }, [splash]);
+  }, [splash, n]);
 
   // which slot is currently behind the type
-  const curId = splash === "photo" ? "splash-hero" : SPLASH_SHOTS[idx];
+  const curId = splash === "photo" ? "splash-hero" : activeId;
 
   // sample it → flip the foreground ink. Re-runs when the frame changes and
   // when the photo store updates (a fresh drop / initial hydration).
@@ -124,8 +143,10 @@ function Splash({ go, profile, splash }) {
     <section className={"splash" + toneClass}>
       <div className="splash-media">
         {splash === "photo"
-          ? <Slot id="splash-hero" ph="Drop a full-bleed hero image" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", aspectRatio: "auto" }} />
-          : <SplashSlideshow idx={idx} />}
+          ? (window.imageSlotStore && window.imageSlotStore.get("splash-hero")
+            ? <Slot id="splash-hero" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", aspectRatio: "auto" }} />
+            : <div style={SKY} />)
+          : <SplashSlideshow shots={availableShots} activeId={activeId} />}
         <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: "26%",
           background: "linear-gradient(to top, color-mix(in oklch, var(--bg) 30%, transparent), transparent)" }} />
       </div>

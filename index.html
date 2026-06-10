@@ -2,6 +2,16 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
+  <!-- Content Security Policy. Note: script-src needs 'unsafe-inline'/'unsafe-eval'
+       because @babel/standalone compiles the JSX in-browser and runs it as injected
+       inline <script> elements (the site's intentional no-build architecture). The
+       CSP is therefore defense-in-depth: it pins script/style/font origins to this
+       site + unpkg + Google Fonts, restricts img to self+data:, locks connect-src to
+       'self' (no third-party exfiltration), and disables plugins/base-tag hijacking.
+       Some headers (X-Frame-Options/frame-ancestors, X-Content-Type-Options, HSTS)
+       can't be set this way and need real HTTP headers — not available on GitHub Pages. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Khoren Mirzakhanian — Colorist & Wingsuit Camera Flyer</title>
 

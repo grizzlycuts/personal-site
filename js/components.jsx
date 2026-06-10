@@ -123,7 +123,7 @@ const Placeholder = ({ tone = "", label, sub, ar = "3 / 2", style = {} }) => (
 );
 
 /* ---------- user-fillable image slot (drag & drop, persists) ---------- */
-const Slot = ({ id, ar = "3 / 2", ph = "Drop an image", radius = 0, fit = "cover", style = {} }) => {
+const Slot = ({ id, ar = "3 / 2", ph = "Drop an image", radius = 0, fit = "cover", src, style = {} }) => {
   // For fit="native" the slot sizes itself to each photo's own aspect ratio,
   // so React must NOT own aspect-ratio (it would clobber the value image-slot
   // sets on load). Pass `ar` as an attribute instead — image-slot uses it only
@@ -139,6 +139,7 @@ const Slot = ({ id, ar = "3 / 2", ph = "Drop an image", radius = 0, fit = "cover
       radius={String(radius)}
       fit={fit}
       ar={ar}
+      src={src}
       placeholder={ph}
       style={baseStyle}
     ></image-slot>

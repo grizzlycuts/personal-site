@@ -240,7 +240,7 @@ function Projects({ go, profile }) {
                 title={p.title + " — IMDb"}
               >
                 <div className="project-poster">
-                  <Slot id={"project-" + p.id} ar="2 / 3" ph={p.title} />
+                  <Slot id={"project-" + p.id} ar="2 / 3" ph={p.title} src={p.poster} />
                 </div>
                 <div className="project-info">
                   <div className="project-title serif">{p.title}</div>

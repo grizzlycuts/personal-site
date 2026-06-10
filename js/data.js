@@ -119,7 +119,7 @@ window.SITE = {
       role: "Digital Intermediate Editor",
       films: [
         { id: "working-man",      title: "A Working Man",                     year: "2025", imdb: "tt9150192"  },
-        { id: "stone-cold-fox",   title: "Stone Cold Fox",                    year: "2025", imdb: "tt27368237" },
+        { id: "stone-cold-fox",   title: "Stone Cold Fox",                    year: "2025", imdb: "tt27368237", poster: "https://m.media-amazon.com/images/M/MV5BYmIwMzMzNGQtMzdhZi00N2I3LWEwZjgtMjBhOGJkOWFkZjljXkEyXkFqcGc@._V1_FMjpg_UY337_.jpg" },
         { id: "hollywood-grit",   title: "Hollywood Grit",                    year: "2025", imdb: "tt30841007" },
         { id: "fallout",          title: "Fallout",                           year: "2024", imdb: "tt12637874" },
         { id: "smile2",           title: "Smile 2",                           year: "2024", imdb: "tt29268110" },
@@ -129,7 +129,7 @@ window.SITE = {
         { id: "monster-summer",   title: "Monster Summer",                    year: "2024", imdb: "tt3954936"  },
         { id: "war-is-over",      title: "War Is Over!",                      year: "2023", imdb: "tt29795707" },
         { id: "peripheral",       title: "The Peripheral",                    year: "2022", imdb: "tt8291284"  },
-        { id: "downfall",         title: "Downfall: The Case Against Boeing", year: "2022", imdb: "tt11893274" },
+        { id: "downfall",         title: "Downfall: The Case Against Boeing", year: "2022", imdb: "tt11893274", poster: "https://m.media-amazon.com/images/M/MV5BYTQzZjhjMGYtOTAyZi00NmI3LTllMGQtYTg3NTIzMWM1YTI4XkEyXkFqcGc@._V1_.jpg" },
         { id: "after-antarctica", title: "After Antarctica",                  year: "2021", imdb: "tt8075000"  },
         { id: "chef-show",        title: "The Chef Show",                     year: "2019", imdb: "tt10359446" },
         { id: "theyll-love-me",   title: "They'll Love Me When I'm Dead",     year: "2018", imdb: "tt6893836"  },

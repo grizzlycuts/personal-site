@@ -76,9 +76,9 @@
   position: absolute; inset: 0; z-index: 1;
   -webkit-backdrop-filter: blur(2.8px) saturate(1.03);
   backdrop-filter: blur(2.8px) saturate(1.03);
-  /* small soft frost behind the top kickers (top band halved) + lower band */
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 1%, transparent 9%, transparent 36%, #000 78%, #000 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 1%, transparent 9%, transparent 36%, #000 78%, #000 100%);
+  /* small soft frost behind the top kickers (top band halved) + lower band (halved) */
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 1%, transparent 9%, transparent 68%, #000 89%, #000 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 1%, transparent 9%, transparent 68%, #000 89%, #000 100%);
   background: linear-gradient(180deg,
     color-mix(in oklch, var(--bg) 10%, transparent) 0%,
     transparent 16%,

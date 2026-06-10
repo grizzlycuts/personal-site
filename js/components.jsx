@@ -210,7 +210,7 @@ function GradeReveal() {
 // active site for now — kept here commented out so they're trivial to restore.
 const NAV = [
   // ["home", "Home"], ["work", "Work"], ["blog", "Blog"],
-  ["album", "Album"], ["now", "Now"], ["links", "Links"], ["contact", "Contact"],
+  ["album", "Album"], ["projects", "Projects"], ["now", "Now"], ["links", "Links"], ["contact", "Contact"],
 ];
 function Nav({ route, go, profile, theme, toggleTheme }) {
   const [open, setOpen] = useState(false);
@@ -225,7 +225,7 @@ function Nav({ route, go, profile, theme, toggleTheme }) {
     )}
     <header className="nav" style={onSplash ? { display: "none" } : {}}>
       <div className="wrap-wide nav-inner">
-        <div className="brand" onClick={() => go("album")}>
+        <div className="brand" onClick={() => go("splash")}>
           <div className="monogram">{profile.monogram}</div>
           <div>
             <div className="brand-name">{profile.name}</div>

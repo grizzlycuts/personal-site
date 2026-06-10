@@ -60,7 +60,7 @@
 .splash-show-base { position: absolute; inset: 0; z-index: 0; }
 .splash-show-frame {
   position: absolute; inset: 0; z-index: 1;
-  opacity: 0; transition: opacity 1.6s var(--ease);
+  opacity: 0; transition: opacity 3s var(--ease);
 }
 .splash-show-frame.active { opacity: 1; }
 .splash-show-frame image-slot { pointer-events: none; }

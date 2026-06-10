@@ -91,13 +91,25 @@ const SOCIALS = [
   { label: "LinkedIn",  Icon: IconLinkedIn,  href: "https://www.linkedin.com/in/khorenmirzakhanian/", s: 20 },
   { label: "Email",     Icon: IconEmail,     href: "mailto:khoren@kolorlux.com", s: 20 },
 ];
+/* tiny registration-mark crosshair — film-leader motif between the icons */
+const SocialSep = () => (
+  <span className="social-sep" aria-hidden="true">
+    <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1">
+      <path d="M6 0.5v3.4M6 8.1v3.4M0.5 6h3.4M8.1 6h3.4" strokeLinecap="round" />
+      <circle cx="6" cy="6" r="1.1" />
+    </svg>
+  </span>
+);
 const SocialIcons = ({ className = "" }) => (
   <div className={"social-row " + className}>
-    {SOCIALS.map(({ label, Icon, href, s }) => (
-      <a key={label} className="social-btn" href={href} target={href.startsWith("mailto") ? undefined : "_blank"}
-        rel="noopener noreferrer" aria-label={label} title={label}>
-        <Icon s={s} />
-      </a>
+    {SOCIALS.map(({ label, Icon, href, s }, i) => (
+      <React.Fragment key={label}>
+        {i > 0 && <SocialSep />}
+        <a className="social-btn" href={href} target={href.startsWith("mailto") ? undefined : "_blank"}
+          rel="noopener noreferrer" aria-label={label} title={label}>
+          <Icon s={s} />
+        </a>
+      </React.Fragment>
     ))}
   </div>
 );

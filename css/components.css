@@ -148,6 +148,7 @@
 .splash.bg-dark .splash-body .btn-ghost { border-color: color-mix(in oklch, var(--splash-fg) 38%, transparent); color: var(--splash-fg-2); }
 .splash.bg-dark .splash-body .social-btn { border-color: color-mix(in oklch, var(--splash-fg) 38%, transparent); color: var(--splash-fg-2); }
 .splash.bg-dark .splash-body .social-btn:hover { background: var(--splash-fg); color: oklch(0.2 0.02 60); border-color: var(--splash-fg); }
+.splash.bg-dark .splash-body .social-sep { color: var(--splash-fg-3); }
 
 .splash-top { position: relative; z-index: 2; padding-top: 30px; }
 .splash-top .kicker { color: var(--accent); text-shadow: 1px 1px 0 rgba(0,0,0,0.75), 0 2px 10px rgba(0,0,0,0.45); }

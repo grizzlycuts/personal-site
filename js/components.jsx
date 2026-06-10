@@ -86,17 +86,17 @@ const IconIMDb = ({ s = 18 }) => (
 );
 
 const SOCIALS = [
-  { label: "Instagram", Icon: IconInstagram, href: "https://www.instagram.com/kolorlux/" },
-  { label: "IMDb", Icon: IconIMDb, href: "https://www.imdb.com/name/nm5585716/" },
-  { label: "LinkedIn", Icon: IconLinkedIn, href: "https://www.linkedin.com/in/khorenmirzakhanian/" },
-  { label: "Email", Icon: IconEmail, href: "mailto:khoren@kolorlux.com" },
+  { label: "Instagram", Icon: IconInstagram, href: "https://www.instagram.com/kolorlux/", s: 20 },
+  { label: "IMDb",      Icon: IconIMDb,      href: "https://www.imdb.com/name/nm5585716/", s: 15 },
+  { label: "LinkedIn",  Icon: IconLinkedIn,  href: "https://www.linkedin.com/in/khorenmirzakhanian/", s: 20 },
+  { label: "Email",     Icon: IconEmail,     href: "mailto:khoren@kolorlux.com", s: 20 },
 ];
 const SocialIcons = ({ className = "" }) => (
   <div className={"social-row " + className}>
-    {SOCIALS.map(({ label, Icon, href }) => (
+    {SOCIALS.map(({ label, Icon, href, s }) => (
       <a key={label} className="social-btn" href={href} target={href.startsWith("mailto") ? undefined : "_blank"}
         rel="noopener noreferrer" aria-label={label} title={label}>
-        <Icon />
+        <Icon s={s} />
       </a>
     ))}
   </div>

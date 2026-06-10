@@ -179,10 +179,10 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.02; let
 }
 
 /* ---------- social icon buttons ---------- */
-.social-row { display: flex; align-items: center; gap: 12px; margin-top: 4px; }
+.social-row { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
 .social-btn {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 42px; height: 42px; border-radius: 50%;
+  width: 52px; height: 52px; border-radius: 50%;
   border: 1px solid var(--line-2); color: var(--ink-2);
   background: transparent; cursor: pointer;
   transition: color 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease), transform 0.3s var(--ease);

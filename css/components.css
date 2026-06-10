@@ -82,8 +82,8 @@
   background: linear-gradient(180deg,
     color-mix(in oklch, var(--bg) 10%, transparent) 0%,
     transparent 16%,
-    color-mix(in oklch, var(--bg) 8%, transparent) 46%,
-    color-mix(in oklch, var(--bg) 42%, transparent) 100%);
+    color-mix(in oklch, var(--bg) 5%, transparent) 46%,
+    color-mix(in oklch, var(--bg) 22%, transparent) 100%);
 }
 /* ---- dynamic foreground contrast ----
    JS samples the brightness of the photo behind the lower-left text cluster
@@ -143,6 +143,20 @@
    hover. */
 .splash-body { transform: scale(0.6); transform-origin: 0 100%; transition: transform 0.55s var(--ease); will-change: transform; }
 .splash-body:hover { transform: scale(1); }
+/* frosted dark panel — sits only behind the cluster, not full-screen */
+.splash-body::before {
+  content: "";
+  position: absolute;
+  inset: -28px -36px;
+  background: linear-gradient(160deg,
+    oklch(0.13 0.015 55 / 0.52) 0%,
+    oklch(0.11 0.014 52 / 0.62) 100%);
+  -webkit-backdrop-filter: blur(8px) saturate(0.88);
+  backdrop-filter: blur(8px) saturate(0.88);
+  border-radius: 6px;
+  z-index: -1;
+  transition: opacity 0.55s var(--ease);
+}
 .splash-name { font-family: var(--serif); font-weight: 500; line-height: 1.08; letter-spacing: -0.02em; font-size: clamp(34px, min(7.7vw, 9.8vh), 115px); }
 .splash-roles { display: flex; flex-wrap: wrap; gap: 10px 26px; }
 .splash-role { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-2); }

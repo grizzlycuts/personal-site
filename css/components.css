@@ -417,6 +417,12 @@
   .post-side { align-items: flex-start; text-align: left; flex-direction: row; gap: 14px; margin-top: 8px; }
   .post-num { display: none; }
 }
+@media (max-width: 600px) {
+  /* The centered floating timecode (.tc-top) and the brand name compete for
+     the narrow header. Collapse the brand to just the monogram so the
+     timecode keeps the center clear — the logo still links to the splash. */
+  .brand > :not(.monogram) { display: none; }
+}
 @media (max-width: 560px) {
   .album-grid { columns: 1; }
   .footer-grid { grid-template-columns: 1fr; gap: 28px; }

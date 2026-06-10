@@ -143,17 +143,19 @@
    hover. */
 .splash-body { transform: scale(0.6); transform-origin: 0 100%; transition: transform 0.55s var(--ease); will-change: transform; }
 .splash-body:hover { transform: scale(1); }
-/* frosted dark panel — sits only behind the cluster, not full-screen */
+/* frosted dark panel — sits only behind the cluster, soft feathered edges */
 .splash-body::before {
   content: "";
   position: absolute;
-  inset: -28px -36px;
-  background: linear-gradient(160deg,
-    oklch(0.13 0.015 55 / 0.52) 0%,
-    oklch(0.11 0.014 52 / 0.62) 100%);
+  inset: -16px -22px;
+  background: oklch(0.11 0.014 52 / 0.58);
   -webkit-backdrop-filter: blur(8px) saturate(0.88);
   backdrop-filter: blur(8px) saturate(0.88);
-  border-radius: 6px;
+  border-radius: 18px;
+  /* mask fades to transparent at all edges — ellipse biased toward lower-left
+     where the cluster anchors (transform-origin: 0 100%) */
+  -webkit-mask-image: radial-gradient(ellipse 88% 82% at 28% 78%, black 32%, transparent 72%);
+  mask-image: radial-gradient(ellipse 88% 82% at 28% 78%, black 32%, transparent 72%);
   z-index: -1;
   transition: opacity 0.55s var(--ease);
 }

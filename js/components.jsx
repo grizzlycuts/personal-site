@@ -80,7 +80,7 @@ const IconEmail = ({ s = 18 }) => (
 const IconIMDb = ({ s = 18 }) => (
   <svg width={s * 1.9} height={s} viewBox="0 0 38 20" fill="none" stroke="currentColor" strokeWidth="1.4">
     <rect x="1" y="1" width="36" height="18" rx="3" />
-    <text x="19" y="14.2" textAnchor="middle" fontFamily="var(--mono)" fontWeight="700"
+    <text x="19" y="14.2" textAnchor="middle" fontFamily='"JetBrains Mono", ui-monospace, monospace' fontWeight="700"
       fontSize="9" letterSpacing="0.5" fill="currentColor" stroke="none">IMDb</text>
   </svg>
 );
@@ -276,7 +276,7 @@ function Footer({ profile, go }) {
           </div>
           <div className="footer-col">
             <h4>Elsewhere</h4>
-            {window.SITE.links.slice(0, 4).map(l => <a key={l.label} href="#" onClick={e => e.preventDefault()}>{l.label}</a>)}
+            {window.SITE.links.slice(0, 4).map(l => <a key={l.label} href={l.href} target={l.href.startsWith("mailto") ? undefined : "_blank"} rel="noopener noreferrer">{l.label}</a>)}
           </div>
         </div>
         <ColorBars />

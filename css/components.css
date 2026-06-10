@@ -150,7 +150,7 @@
 .splash-enter { position: relative; z-index: 2; padding-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-end; }
 .splash-tc { font-family: var(--mono); font-size: 12.1px; letter-spacing: 0.1em; color: var(--ink-3); display: inline-flex; align-items: center; gap: 8px; }
 .splash-tc .tc-digits { color: var(--ink-2); font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
-.splash-tc .tc-fps { color: var(--ink-3); }
+.splash-tc .tc-fps { color: var(--ink-2); }
 .splash-tc .tc-rec {
   width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
   box-shadow: 0 0 0 0 color-mix(in oklch, var(--accent) 60%, transparent);

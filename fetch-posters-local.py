@@ -15,7 +15,7 @@ except ImportError:
 
 POSTERS = [
     ("working-man",      "https://m.media-amazon.com/images/M/MV5BYmQxZGIxNTYtYTQwMy00ODdkLWI0MmQtM2E0ZmIyNmYzMGMzXkEyXkFqcGc@._V1_.jpg"),
-    ("stone-cold-fox",   "https://m.media-amazon.com/images/M/MV5BZDNlZTVlNDgtYTg0MC00ODkyLWJjNWEtMmVjZGQzZDBiMzUwXkEyXkFqcGc@._V1_.jpg"),
+    ("stone-cold-fox",   "https://m.media-amazon.com/images/M/MV5BYmIwMzMzNGQtMzdhZi00N2I3LWEwZjgtMjBhOGJkOWFkZjljXkEyXkFqcGc@._V1_FMjpg_UY337_.jpg"),
     ("hollywood-grit",   "https://m.media-amazon.com/images/M/MV5BODZhOGEwNTEtZDc1NC00YTgwLTk4OTctYmQwODgwZGI0NWQzXkEyXkFqcGc@._V1_.jpg"),
     ("fallout",          "https://m.media-amazon.com/images/M/MV5BYzE1MTZmY2ItMTgxNi00OGU5LTk4NTItMmY2ODFhYzhjZjRkXkEyXkFqcGc@._V1_.jpg"),
     ("smile2",           "https://m.media-amazon.com/images/M/MV5BNTU4ZDUzNDQtYTY1NC00ZDg4LWFlOGMtYmI5MmE2ZTkzOTM2XkEyXkFqcGc@._V1_.jpg"),
@@ -25,7 +25,7 @@ POSTERS = [
     ("monster-summer",   "https://m.media-amazon.com/images/M/MV5BN2ExNDg1MTMtOTliOC00OWFjLWFlNTktOTZhYjUzNzk3ZTFhXkEyXkFqcGc@._V1_.jpg"),
     ("war-is-over",      "https://m.media-amazon.com/images/M/MV5BY2I1NTEyM2UtMDYzMS00NTYwLWE3ZDEtNjIzMWQ1MWY5NDAyXkEyXkFqcGc@._V1_FMjpg_UY480_.jpg"),
     ("peripheral",       "https://m.media-amazon.com/images/M/MV5BODE1NmJiMzAtYmRmZi00ZjkzLWJhZjctNGU0YmFjZWI5NzZmXkEyXkFqcGc@._V1_.jpg"),
-    ("downfall",         "https://m.media-amazon.com/images/M/MV5BYjZkNGExYzItZjY3Yi00Y2RmLWFjM2UtNzVkNGQwZjllZDRjXkEyXkFqcGc@._V1_.jpg"),
+    ("downfall",         "https://m.media-amazon.com/images/M/MV5BYTQzZjhjMGYtOTAyZi00NmI3LTllMGQtYTg3NTIzMWM1YTI4XkEyXkFqcGc@._V1_.jpg"),
     ("after-antarctica", "https://m.media-amazon.com/images/M/MV5BMTUzZmNiMjItMTMwYy00NmI4LWIyNGMtYjU4MzQxNWJlZDMzXkEyXkFqcGc@._V1_.jpg"),
     ("chef-show",        "https://m.media-amazon.com/images/M/MV5BYmExZTE3YzYtZTk2ZC00YTEzLWFmZmYtMDgwMGMzYjQwYjU5XkEyXkFqcGc@._V1_.jpg"),
     ("theyll-love-me",   "https://m.media-amazon.com/images/M/MV5BMjEwNzExNzU2Ml5BMl5BanBnXkFtZTgwMjIyNDI0NjM@._V1_FMjpg_UY473_.jpg"),

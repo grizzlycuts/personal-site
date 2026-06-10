@@ -66,21 +66,23 @@
 .splash-show-base { position: absolute; inset: 0; z-index: 0; }
 .splash-show-frame {
   position: absolute; inset: 0; z-index: 1;
-  /* base transform = ken-burns end scale, so when .active (and its forwards
-     animation) is removed the outgoing frame eases toward the zoom end over
-     the fade instead of snapping back to scale(1) — kills the pop. The
-     incoming frame's reset to scale(1.02) happens at opacity 0, unseen. */
-  opacity: 0; transform: scale(1.06);
-  transition: opacity 3s var(--ease), transform 3s var(--ease);
+  /* No pop on exit: base transform = ken-burns END scale, and both the zoom
+     animation and the exit transition are LINEAR, so when .active (and its
+     forwards animation) is removed the outgoing frame keeps drifting inward
+     at the same velocity instead of snapping back or changing speed. The
+     transform transition (8s) outlasts the 3.8s fade, so its slow tail is
+     never visible. The incoming reset to scale(1.04) lands at opacity 0. */
+  opacity: 0; transform: scale(1.18);
+  transition: opacity 3.8s var(--ease), transform 8s linear;
 }
 .splash-show-frame.active { opacity: 1; }
 .splash-show-frame image-slot { pointer-events: none; }
 @media (prefers-reduced-motion: no-preference) {
-  .splash-show-frame.active { animation: splash-kenburns 12s ease-out forwards; }
+  .splash-show-frame.active { animation: splash-kenburns 16s linear forwards; }
 }
 @keyframes splash-kenburns {
-  from { transform: scale(1.02); }
-  to   { transform: scale(1.06); }
+  from { transform: scale(1.04); }
+  to   { transform: scale(1.18); }
 }
 
 .splash-veil {

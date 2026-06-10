@@ -218,7 +218,13 @@ function Projects({ go, profile }) {
   const profileUrl = window.SITE.imdbProfile;
   return (
     <main className="page">
-      <PageHead kicker="Projects" />
+      <PageHead kicker="Projects">
+        <a className="imdb-credits-link reveal" href={profileUrl} target="_blank" rel="noopener noreferrer">
+          <IconIMDb s={20} />
+          <span>Full list of credits</span>
+          <ArrowR s={14} />
+        </a>
+      </PageHead>
       {window.SITE.projectGroups.map((group, gi) => (
         <section key={group.role} className="wrap-wide"
           style={{ paddingTop: gi === 0 ? 0 : "clamp(20px,3vw,40px)", paddingBottom: "clamp(40px,7vw,90px)" }}>

@@ -147,15 +147,23 @@
 .splash-body::before {
   content: "";
   position: absolute;
-  inset: 12px -22px;
+  top: 12px; bottom: 12px; right: -22px;
+  /* break out of the centered wrap-wide to the viewport left edge */
+  left: calc(-50vw + 50%);
   background: oklch(0.11 0.014 52 / 0.32);
   -webkit-backdrop-filter: blur(8px) saturate(0.88);
   backdrop-filter: blur(8px) saturate(0.88);
   border-radius: 18px;
-  /* ellipse biased toward upper-right core; left and bottom edges dissolve
-     much earlier so they barely register against the photo */
-  -webkit-mask-image: radial-gradient(ellipse 78% 54% at 42% 58%, black 18%, transparent 68%);
-  mask-image: radial-gradient(ellipse 78% 54% at 42% 58%, black 18%, transparent 68%);
+  /* vertical feather (top/bottom) × horizontal fade-right; left hits the
+     viewport wall so no feather needed there */
+  -webkit-mask-image:
+    linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%),
+    linear-gradient(to right, black 55%, transparent 94%);
+  -webkit-mask-composite: destination-in;
+  mask-image:
+    linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%),
+    linear-gradient(to right, black 55%, transparent 94%);
+  mask-composite: intersect;
   z-index: -1;
   transition: opacity 0.55s var(--ease);
 }

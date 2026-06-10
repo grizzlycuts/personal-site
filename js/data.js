@@ -111,6 +111,25 @@ window.SITE = {
     { title: "Carry the Fire",  role: "Editor · Colorist", type: "Short",       year: "2023" },
   ],
 
+  /* ---- PROJECTS / DI EDITOR CREDITS ---- */
+  projects: [
+    { id: "working-man",    title: "A Working Man",                       year: "2025", imdb: "tt14948432" },
+    { id: "stone-cold-fox", title: "Stone Cold Fox",                      year: "2025", imdb: "tt27368237" },
+    { id: "hollywood-grit", title: "Hollywood Grit",                      year: "2025", imdb: "tt30841007" },
+    { id: "fallout",        title: "Fallout",                             year: "2024", imdb: "tt11772468" },
+    { id: "smile2",         title: "Smile 2",                             year: "2024", imdb: "tt22408160" },
+    { id: "kingdom",        title: "Kingdom of the Planet of the Apes",   year: "2024", imdb: "tt11389872" },
+    { id: "musica",         title: "Música",                              year: "2024", imdb: "tt19853698" },
+    { id: "winner",         title: "Winner",                              year: "2024", imdb: "tt11433906" },
+    { id: "monster-summer", title: "Monster Summer",                      year: "2024", imdb: "tt3954936"  },
+    { id: "war-is-over",    title: "War Is Over!",                        year: "2023", imdb: "tt15267026" },
+    { id: "peripheral",     title: "The Peripheral",                      year: "2022", imdb: "tt8109236"  },
+    { id: "downfall",       title: "Downfall: The Case Against Boeing",   year: "2022", imdb: "tt16596064" },
+    { id: "after-antarctica", title: "After Antarctica",                  year: "2021", imdb: "tt8075000"  },
+    { id: "chef-show",      title: "The Chef Show",                       year: "2019", imdb: "tt10050808" },
+    { id: "theyll-love-me", title: "They'll Love Me When I'm Dead",       year: "2018", imdb: "tt7638540"  },
+  ],
+
   /* ---- NOW ---- */
   now: [
     { label: "FINISHING", body: "Finishing a 3 part limited series special." },

@@ -213,4 +213,40 @@ function Links({ go, profile }) {
   );
 }
 
-Object.assign(window, { Blog, Album, Now, Work, Contact, Links, PageHead, Lightbox });
+/* ---------------- PROJECTS ---------------- */
+function Projects({ go, profile }) {
+  return (
+    <main className="page">
+      <PageHead kicker="Projects">
+        <p className="meta reveal" style={{ marginTop: 14, fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--ink-3)" }}>
+          Digital Intermediate Editor
+        </p>
+      </PageHead>
+      <section className="wrap-wide" style={{ paddingBottom: "clamp(60px,9vw,120px)" }}>
+        <div className="projects-grid">
+          {window.SITE.projects.map((p) => (
+            <a
+              key={p.id}
+              className="project-card"
+              href={"https://www.imdb.com/title/" + p.imdb + "/"}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={p.title + " — IMDb"}
+            >
+              <div className="project-poster">
+                <Slot id={"project-" + p.id} ar="2 / 3" ph={p.title} />
+              </div>
+              <div className="project-info">
+                <div className="project-title serif">{p.title}</div>
+                <div className="project-year mono">{p.year}</div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+      <Footer profile={profile} go={go} />
+    </main>
+  );
+}
+
+Object.assign(window, { Blog, Album, Now, Work, Contact, Links, Projects, PageHead, Lightbox });

@@ -29,7 +29,7 @@ const ACCENTS = [
 // NOTE (under construction): home / work / blog are temporarily hidden
 // from the active site. They're omitted from ROUTES so they can't be navigated to,
 // but the page components below stay mapped — re-add the ids here to restore.
-const ROUTES = ["splash", "album", "now", "links", "contact"];
+const ROUTES = ["splash", "album", "projects", "now", "links", "contact"];
 // Hidden for now: "home", "work", "blog"
 
 function getRoute() {
@@ -93,7 +93,7 @@ function App() {
     monogram: (t.name || window.SITE.profile.name).split(/\s+/).map(w => w[0]).slice(0, 2).join("").toUpperCase(),
   };
 
-  const Page = { splash: Splash, home: Home, work: Work, blog: Blog, album: Album, now: Now, links: Links, contact: Contact }[route] || Home;
+  const Page = { splash: Splash, home: Home, work: Work, blog: Blog, album: Album, projects: Projects, now: Now, links: Links, contact: Contact }[route] || Home;
 
   return (
     <>

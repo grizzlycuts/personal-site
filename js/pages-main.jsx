@@ -113,25 +113,6 @@ function Splash({ go, profile, splash }) {
     return () => clearInterval(t);
   }, [splash, n]);
 
-  // While the current shot's sidecar hasn't hydrated yet, jump to the first
-  // shot in the play order whose photo HAS landed — sidecars stream in one
-  // by one on first load, so the gradient gives way to a photo as soon as
-  // any file arrives instead of waiting on the randomly-chosen first slide.
-  // Once everything is hydrated this is a no-op (current shot has a url).
-  useE1(() => {
-    if (splash === "photo") return;
-    const store = window.imageSlotStore;
-    if (!store) return;
-    const seek = () => setPos((p) => {
-      if (store.get(SPLASH_SHOTS[order.current[p]])) return p;
-      const q = order.current.findIndex((i) => store.get(SPLASH_SHOTS[i]));
-      return q >= 0 ? q : p;
-    });
-    seek();
-    store.ensure();
-    return store.subscribe(seek);
-  }, [splash]);
-
   // which slot is currently behind the type
   const curId = splash === "photo" ? "splash-hero" : activeId;
 

@@ -29,9 +29,9 @@ step — React UMD + Babel standalone in the browser).
 ## Cache-busting
 Every script/style in `index.html` is loaded with `?v=N`. **Bump the version
 whenever you edit that file** or a browser may serve a stale cached copy.
-Current: site.css v14, components.css v29, image-slot v13, data.js v15,
-tweaks-panel v7, components.jsx v19, pages-main.jsx v22, pages-sub.jsx v17,
-app.jsx v14.
+Current: site.css v14, components.css v46, image-slot v14, data.js v20,
+tweaks-panel v7, components.jsx v22, pages-main.jsx v25, pages-sub.jsx v22,
+app.jsx v15.
 
 ## Active vs hidden pages (site under construction)
 Active nav: **Album · Now · Links · Contact**, with the splash as the landing.

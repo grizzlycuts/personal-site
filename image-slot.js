@@ -81,37 +81,49 @@
   const safeId = (id) => String(id).replace(/[^a-zA-Z0-9_-]/g, '_');
   const slotFile = (id) => '.image-slots.' + safeId(id) + '.state.json';
 
+  // Per-id hydration with the same merge semantics the old whole-library
+  // merge had: disk loses to any in-memory change that raced ahead of the
+  // fetch (drop or clear), and a framing-only write that raced ahead must
+  // not drop a user image that's only on disk — it inherits u from disk.
+  function hydrate(id, v) {
+    if (v == null || tombstones.has(id)) return;
+    const mem = slots[id];
+    if (mem) {
+      if (typeof mem === 'object' && !mem.u) {
+        mem.u = typeof v === 'string' ? v : v.u;
+      }
+    } else {
+      slots[id] = v;
+    }
+    subs.forEach((fn) => fn());
+  }
+
   function load() {
     if (loadP) return loadP;
     loadP = fetch(INDEX_FILE)
       .then((r) => (r.ok ? r.json() : null))
       .then(async (idx) => {
-        const disk = {};
         if (idx && Array.isArray(idx.ids)) {
           // Current format: manifest of ids → one fetch per slot file.
-          await Promise.all(idx.ids.map((id) =>
+          // Hydrate progressively: each file notifies subscribers as it
+          // lands, so the first photo paints after its own ~1MB instead of
+          // after the whole multi-MB library. Album slots are requested
+          // first — they feed the splash slideshow and album grid, and the
+          // browser's per-origin connection cap would otherwise let the
+          // (hidden-page) poster files starve them. Stable sort keeps each
+          // group's manifest order.
+          const ids = [...idx.ids].sort((a, b) =>
+            (a.startsWith('album') ? 0 : 1) - (b.startsWith('album') ? 0 : 1));
+          await Promise.all(ids.map((id) =>
             fetch(slotFile(id))
               .then((r) => (r.ok ? r.json() : null))
-              .then((v) => { if (v) disk[id] = v; })
+              .then((v) => hydrate(id, v))
               .catch(() => {})
           ));
         } else if (idx && typeof idx === 'object') {
           // Back-compat: a legacy single-file sidecar held every slot inline.
-          for (const k in idx) disk[k] = idx[k];
+          for (const k in idx) hydrate(k, idx[k]);
         }
-        // Merge: disk loses to any in-memory change that raced ahead of the
-        // fetch (drop or clear) so neither is clobbered by hydration.
-        const merged = Object.assign({}, disk, slots);
-        // A framing-only write that raced ahead must not drop a user image
-        // that's only on disk — inherit u from disk for in-memory entries
-        // that lack one.
-        for (const k in slots) {
-          if (merged[k] && !merged[k].u && disk[k]) {
-            merged[k].u = typeof disk[k] === 'string' ? disk[k] : disk[k].u;
-          }
-        }
-        for (const id of tombstones) delete merged[id];
-        slots = merged;
         tombstones.clear();
       })
       .catch(() => {})

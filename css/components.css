@@ -89,8 +89,8 @@
 
 .splash-veil {
   position: absolute; inset: 0; z-index: 1;
-  -webkit-backdrop-filter: blur(2.8px) saturate(1.03);
-  backdrop-filter: blur(2.8px) saturate(1.03);
+  -webkit-backdrop-filter: blur(3.1px) saturate(1.03);
+  backdrop-filter: blur(3.1px) saturate(1.03);
   /* small soft frost behind the top kickers (top band halved) + lower band (halved) */
   -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 1%, transparent 9%, transparent 68%, #000 89%, #000 100%);
   mask-image: linear-gradient(to bottom, #000 0%, #000 1%, transparent 9%, transparent 68%, #000 89%, #000 100%);
@@ -98,7 +98,7 @@
     color-mix(in oklch, var(--bg) 10%, transparent) 0%,
     transparent 16%,
     color-mix(in oklch, var(--bg) 5%, transparent) 46%,
-    color-mix(in oklch, var(--bg) 22%, transparent) 100%);
+    color-mix(in oklch, var(--bg) 24%, transparent) 100%);
 }
 /* ---- dynamic foreground contrast ----
    JS samples the brightness of the photo behind the lower-left text cluster

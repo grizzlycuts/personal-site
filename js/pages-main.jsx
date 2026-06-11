@@ -180,6 +180,7 @@ function Splash({ go, profile, splash }) {
             <button className="btn btn-blocked" aria-disabled="true" tabIndex={-1} style={{ width: "100%", justifyContent: "center" }}>Enter the site <ArrowR /></button>
           </span>
           <div className="row gap-s" style={{ flexWrap: "wrap" }}>
+            <button className="btn btn-ghost" onClick={() => go("projects")} style={{ flex: 1, justifyContent: "center", minWidth: 120 }}>Selected work</button>
             <button className="btn btn-ghost" onClick={() => go("album")} style={{ flex: 1, justifyContent: "center", minWidth: 120 }}>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
@@ -187,7 +188,6 @@ function Splash({ go, profile, splash }) {
               </svg>
               Gallery
             </button>
-            <button className="btn btn-ghost" onClick={() => go("projects")} style={{ flex: 1, justifyContent: "center", minWidth: 120 }}>Selected work</button>
           </div>
         </div>
         <SocialIcons />

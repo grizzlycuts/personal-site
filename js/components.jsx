@@ -80,24 +80,36 @@ const IconEmail = ({ s = 18 }) => (
 const IconIMDb = ({ s = 18 }) => (
   <svg width={s * 1.9} height={s} viewBox="0 0 38 20" fill="none" stroke="currentColor" strokeWidth="1.4">
     <rect x="1" y="1" width="36" height="18" rx="3" />
-    <text x="19" y="14.2" textAnchor="middle" fontFamily="var(--mono)" fontWeight="700"
+    <text x="19" y="14.2" textAnchor="middle" fontFamily='"JetBrains Mono", ui-monospace, monospace' fontWeight="700"
       fontSize="9" letterSpacing="0.5" fill="currentColor" stroke="none">IMDb</text>
   </svg>
 );
 
 const SOCIALS = [
-  { label: "Instagram", Icon: IconInstagram, href: "https://www.instagram.com/kolorlux/" },
-  { label: "IMDb", Icon: IconIMDb, href: "https://www.imdb.com/name/nm5585716/" },
-  { label: "LinkedIn", Icon: IconLinkedIn, href: "https://www.linkedin.com/in/khorenmirzakhanian/" },
-  { label: "Email", Icon: IconEmail, href: "mailto:khoren@kolorlux.com" },
+  { label: "Instagram", Icon: IconInstagram, href: "https://www.instagram.com/kolorlux/", s: 20 },
+  { label: "IMDb",      Icon: IconIMDb,      href: "https://www.imdb.com/name/nm5585716/", s: 15 },
+  { label: "LinkedIn",  Icon: IconLinkedIn,  href: "https://www.linkedin.com/in/khorenmirzakhanian/", s: 20 },
+  { label: "Email",     Icon: IconEmail,     href: "mailto:khoren@kolorlux.com", s: 20 },
 ];
+/* tiny registration-mark crosshair — film-leader motif between the icons */
+const SocialSep = () => (
+  <span className="social-sep" aria-hidden="true">
+    <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1">
+      <path d="M6 0.5v3.4M6 8.1v3.4M0.5 6h3.4M8.1 6h3.4" strokeLinecap="round" />
+      <circle cx="6" cy="6" r="1.1" />
+    </svg>
+  </span>
+);
 const SocialIcons = ({ className = "" }) => (
   <div className={"social-row " + className}>
-    {SOCIALS.map(({ label, Icon, href }) => (
-      <a key={label} className="social-btn" href={href} target={href.startsWith("mailto") ? undefined : "_blank"}
-        rel="noopener noreferrer" aria-label={label} title={label}>
-        <Icon />
-      </a>
+    {SOCIALS.map(({ label, Icon, href, s }, i) => (
+      <React.Fragment key={label}>
+        {i > 0 && <SocialSep />}
+        <a className="social-btn" href={href} target={href.startsWith("mailto") ? undefined : "_blank"}
+          rel="noopener noreferrer" aria-label={label} title={label}>
+          <Icon s={s} />
+        </a>
+      </React.Fragment>
     ))}
   </div>
 );
@@ -210,7 +222,7 @@ function GradeReveal() {
 // active site for now — kept here commented out so they're trivial to restore.
 const NAV = [
   // ["home", "Home"], ["work", "Work"], ["blog", "Blog"],
-  ["album", "Album"], ["projects", "Projects"], ["now", "Now"], ["links", "Links"], ["contact", "Contact"],
+  ["album", "Photos"], ["projects", "Films"], ["now", "Now"], ["links", "Links"], ["contact", "Contact"],
 ];
 function Nav({ route, go, profile, theme, toggleTheme }) {
   const [open, setOpen] = useState(false);
@@ -276,7 +288,7 @@ function Footer({ profile, go }) {
           </div>
           <div className="footer-col">
             <h4>Elsewhere</h4>
-            {window.SITE.links.slice(0, 4).map(l => <a key={l.label} href="#" onClick={e => e.preventDefault()}>{l.label}</a>)}
+            {window.SITE.links.slice(0, 4).map(l => <a key={l.label} href={l.href} target={l.href.startsWith("mailto") ? undefined : "_blank"} rel="noopener noreferrer">{l.label}</a>)}
           </div>
         </div>
         <ColorBars />

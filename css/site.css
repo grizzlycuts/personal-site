@@ -179,15 +179,17 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 500; line-height: 1.02; let
 }
 
 /* ---------- social icon buttons ---------- */
-.social-row { display: flex; align-items: center; gap: 12px; margin-top: 4px; }
+.social-row { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
 .social-btn {
   display: inline-flex; align-items: center; justify-content: center;
-  width: 42px; height: 42px; border-radius: 50%;
+  width: 52px; height: 52px; border-radius: 50%;
   border: 1px solid var(--line-2); color: var(--ink-2);
   background: transparent; cursor: pointer;
   transition: color 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease), transform 0.3s var(--ease);
 }
 .social-btn:hover { color: var(--bg); background: var(--ink); border-color: var(--ink); transform: translateY(-2px); }
+/* registration-mark separator between icons — quiet film-leader detail */
+.social-sep { display: inline-flex; align-items: center; color: var(--ink-3); opacity: 0.6; pointer-events: none; }
 
 .arrow { transition: transform 0.35s var(--ease); display: inline-block; }
 .btn:hover .arrow, .link-arrow:hover .arrow { transform: translateX(4px); }

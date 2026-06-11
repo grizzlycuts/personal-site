@@ -58,13 +58,13 @@ function regionBrightness(url) {
   });
 }
 
-function SplashSlideshow({ idx }) {
+function SplashSlideshow({ shots, activeId }) {
   return (
     <div className="splash-show">
       <div style={SKY} className="splash-show-base" />
-      {SPLASH_SHOTS.map((id, i) => (
-        <div className={"splash-show-frame" + (i === idx ? " active" : "")} key={id}>
-          <Slot id={id} ph="Drop a photo" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", aspectRatio: "auto" }} />
+      {shots.map((id) => (
+        <div className={"splash-show-frame" + (id === activeId ? " active" : "")} key={id}>
+          <Slot id={id} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", aspectRatio: "auto" }} />
         </div>
       ))}
     </div>
@@ -72,27 +72,46 @@ function SplashSlideshow({ idx }) {
 }
 
 function Splash({ go, profile, splash }) {
-  // a randomized play-order through the shots, shuffled once per mount
-  const order = useRef1(null);
-  if (!order.current) {
-    const a = SPLASH_SHOTS.map((_, i) => i);
+  const [, force] = useS1(0);
+  const [pos, setPos] = useS1(0);
+  const [tone, setTone] = useS1(null);
+  const orderRef = useRef1(null);
+  const prevNRef = useRef1(0);
+
+  // Subscribe so the component re-renders once the photo store loads
+  useE1(() => {
+    if (!window.imageSlotStore) return;
+    window.imageSlotStore.ensure();
+    return window.imageSlotStore.subscribe(() => force(n => n + 1));
+  }, []);
+
+  // Only cycle through shots that have a stored photo
+  const availableShots = SPLASH_SHOTS.filter(id =>
+    window.imageSlotStore && window.imageSlotStore.get(id)
+  );
+  const n = availableShots.length;
+
+  // Re-shuffle when the count of available shots changes
+  if (prevNRef.current !== n) {
+    prevNRef.current = n;
+    const a = availableShots.map((_, i) => i);
     for (let i = a.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [a[i], a[j]] = [a[j], a[i]];
     }
-    order.current = a;
+    orderRef.current = a;
   }
-  const [pos, setPos] = useS1(0);
-  const idx = order.current[pos];
-  const [tone, setTone] = useS1(null);
+
+  const activeId = n ? availableShots[orderRef.current[pos % n]] : null;
 
   // advance the background slideshow (held under reduced-motion)
   useE1(() => {
     if (splash === "photo") return;
+    if (!n) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const t = setInterval(() => setPos(p => (p + 1) % SPLASH_SHOTS.length), 5600);
+    const t = setInterval(() => setPos(p => (p + 1) % n), 5600);
     return () => clearInterval(t);
-  }, [splash]);
+  }, [splash, n]);
 
   // While the current shot's sidecar hasn't hydrated yet, jump to the first
   // shot in the play order whose photo HAS landed — sidecars stream in one
@@ -114,7 +133,7 @@ function Splash({ go, profile, splash }) {
   }, [splash]);
 
   // which slot is currently behind the type
-  const curId = splash === "photo" ? "splash-hero" : SPLASH_SHOTS[idx];
+  const curId = splash === "photo" ? "splash-hero" : activeId;
 
   // sample it → flip the foreground ink. Re-runs when the frame changes and
   // when the photo store updates (a fresh drop / initial hydration).
@@ -143,10 +162,16 @@ function Splash({ go, profile, splash }) {
     <section className={"splash" + toneClass}>
       <div className="splash-media">
         {splash === "photo"
-          ? <Slot id="splash-hero" ph="Drop a full-bleed hero image" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", aspectRatio: "auto" }} />
-          : <SplashSlideshow idx={idx} />}
-        <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: "26%",
-          background: "linear-gradient(to top, color-mix(in oklch, var(--bg) 30%, transparent), transparent)" }} />
+          ? (window.imageSlotStore && window.imageSlotStore.get("splash-hero")
+            ? <Slot id="splash-hero" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", aspectRatio: "auto" }} />
+            : <div style={SKY} />)
+          : <SplashSlideshow shots={availableShots} activeId={activeId} />}
+        {/* Cinematic vignette — dark bottom + left edge independent of theme,
+            so text is legible over any photo without relying solely on JS detection */}
+        <div style={{ position: "absolute", inset: 0, pointerEvents: "none",
+          background:
+            "linear-gradient(to top,  rgba(0,0,0,0.68) 0%, rgba(0,0,0,0.36) 22%, rgba(0,0,0,0.08) 52%, transparent 78%)," +
+            "linear-gradient(to right, rgba(0,0,0,0.30) 0%, rgba(0,0,0,0.08) 38%, transparent 65%)" }} />
       </div>
       <div className="splash-veil" />
 
@@ -169,11 +194,20 @@ function Splash({ go, profile, splash }) {
           ))}
         </div>
         <p className="lead" style={{ maxWidth: "30ch" }}>{profile.tagline}</p>
-        <div className="row gap-m" style={{ marginTop: 8, flexWrap: "wrap" }}>
-          <span className="btn-blocked-wrap" title="Site under construction — coming soon">
-            <button className="btn btn-blocked" aria-disabled="true" tabIndex={-1}>Enter the site <ArrowR /></button>
+        <div className="col gap-s" style={{ marginTop: 8 }}>
+          <span className="btn-blocked-wrap" title="Site under construction — coming soon" style={{ width: "100%" }}>
+            <button className="btn btn-blocked" aria-disabled="true" tabIndex={-1} style={{ width: "100%", justifyContent: "center" }}>Enter the site <ArrowR /></button>
           </span>
-          <button className="btn btn-ghost" onClick={() => go("album")}>Selected work</button>
+          <div className="row gap-s" style={{ flexWrap: "wrap" }}>
+            <button className="btn btn-ghost" onClick={() => go("projects")} style={{ flex: 1, justifyContent: "center", minWidth: 120 }}>Selected work</button>
+            <button className="btn btn-ghost" onClick={() => go("album")} style={{ flex: 1, justifyContent: "center", minWidth: 120 }}>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                <circle cx="12" cy="13" r="4"/>
+              </svg>
+              Gallery
+            </button>
+          </div>
         </div>
         <SocialIcons />
       </div>

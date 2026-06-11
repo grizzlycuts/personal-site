@@ -66,19 +66,21 @@
 .splash-show-base { position: absolute; inset: 0; z-index: 0; }
 .splash-show-frame {
   position: absolute; inset: 0; z-index: 1;
-  /* No pop on exit: base transform = ken-burns END scale, and both the zoom
-     animation and the exit transition are LINEAR, so when .active (and its
-     forwards animation) is removed the outgoing frame keeps drifting inward
-     at the same velocity instead of snapping back or changing speed. The
-     transform transition (8s) outlasts the 3.8s fade, so its slow tail is
-     never visible. The incoming reset to scale(1.04) lands at opacity 0. */
-  opacity: 0; transform: scale(1.18);
-  transition: opacity 3.8s var(--ease), transform 8s linear;
+  /* No size pop on crossfade: the ken-burns is a PAUSED animation that only
+     advances while .active (via animation-play-state), instead of being added
+     on .active and removed on exit. Removing a running animation reverts the
+     transform to its base value WITHOUT a transition (transitions don't fire
+     off an animated value) — that snap is the pop. Pausing instead FREEZES the
+     current scale, so the outgoing frame holds its size and just fades out;
+     re-activating resumes from the frozen scale, also pop-free. */
+  opacity: 0; transform: scale(1.08);
+  transition: opacity 3.8s var(--ease);
 }
 .splash-show-frame.active { opacity: 1; }
 .splash-show-frame image-slot { pointer-events: none; }
 @media (prefers-reduced-motion: no-preference) {
-  .splash-show-frame.active { animation: splash-kenburns 16s linear forwards; }
+  .splash-show-frame { transform: scale(1.04); animation: splash-kenburns 16s linear forwards paused; }
+  .splash-show-frame.active { animation-play-state: running; }
 }
 @keyframes splash-kenburns {
   from { transform: scale(1.04); }
@@ -87,8 +89,8 @@
 
 .splash-veil {
   position: absolute; inset: 0; z-index: 1;
-  -webkit-backdrop-filter: blur(2.8px) saturate(1.03);
-  backdrop-filter: blur(2.8px) saturate(1.03);
+  -webkit-backdrop-filter: blur(3.1px) saturate(1.03);
+  backdrop-filter: blur(3.1px) saturate(1.03);
   /* small soft frost behind the top kickers (top band halved) + lower band (halved) */
   -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 1%, transparent 9%, transparent 68%, #000 89%, #000 100%);
   mask-image: linear-gradient(to bottom, #000 0%, #000 1%, transparent 9%, transparent 68%, #000 89%, #000 100%);
@@ -96,30 +98,31 @@
     color-mix(in oklch, var(--bg) 10%, transparent) 0%,
     transparent 16%,
     color-mix(in oklch, var(--bg) 5%, transparent) 46%,
-    color-mix(in oklch, var(--bg) 22%, transparent) 100%);
+    color-mix(in oklch, var(--bg) 24%, transparent) 100%);
 }
 /* ---- dynamic foreground contrast ----
    JS samples the brightness of the photo behind the lower-left text cluster
    and tags .splash with .bg-dark (light type) or .bg-light (dark type). The
    --splash-fg vars + a soft legibility scrim cross-fade with the slideshow so
-   the name/roles/tagline never get lost against a busy frame. With no tag we
-   fall back to the theme ink (current look). */
+   the name/roles/tagline never get lost against a busy frame.
+   --splash-scrim is always-on (subtle) and strengthens on detected dark frames.
+   bg-light uses dark ink so no shadow is needed there. */
 .splash {
   --splash-fg:   var(--ink);
   --splash-fg-2: var(--ink-2);
   --splash-fg-3: var(--ink-3);
-  --splash-scrim: none;
+  --splash-scrim: 0 1px 3px rgba(0,0,0,0.30), 0 3px 20px rgba(0,0,0,0.20);
 }
 .splash.bg-dark {
-  --splash-fg:   oklch(0.91 0.012 85);
-  --splash-fg-2: oklch(0.83 0.012 85);
-  --splash-fg-3: oklch(0.73 0.012 85);
-  --splash-scrim: 0 1px 2px rgba(0,0,0,0.45), 0 2px 22px rgba(0,0,0,0.42);
+  --splash-fg:   oklch(0.93 0.010 85);
+  --splash-fg-2: oklch(0.85 0.010 85);
+  --splash-fg-3: oklch(0.74 0.010 85);
+  --splash-scrim: 0 1px 2px rgba(0,0,0,0.62), 0 2px 28px rgba(0,0,0,0.52);
 }
 .splash.bg-light {
-  --splash-fg:   oklch(0.33 0.018 60);
-  --splash-fg-2: oklch(0.43 0.016 60);
-  --splash-fg-3: oklch(0.52 0.014 62);
+  --splash-fg:   oklch(0.28 0.018 60);
+  --splash-fg-2: oklch(0.38 0.016 60);
+  --splash-fg-3: oklch(0.50 0.014 62);
   --splash-scrim: none;
 }
 .splash-name,
@@ -145,6 +148,7 @@
 .splash.bg-dark .splash-body .btn-ghost { border-color: color-mix(in oklch, var(--splash-fg) 38%, transparent); color: var(--splash-fg-2); }
 .splash.bg-dark .splash-body .social-btn { border-color: color-mix(in oklch, var(--splash-fg) 38%, transparent); color: var(--splash-fg-2); }
 .splash.bg-dark .splash-body .social-btn:hover { background: var(--splash-fg); color: oklch(0.2 0.02 60); border-color: var(--splash-fg); }
+.splash.bg-dark .splash-body .social-sep { color: var(--splash-fg-3); }
 
 .splash-top { position: relative; z-index: 2; padding-top: 30px; }
 .splash-top .kicker { color: var(--accent); text-shadow: 1px 1px 0 rgba(0,0,0,0.75), 0 2px 10px rgba(0,0,0,0.45); }
@@ -280,8 +284,8 @@
 
 /* projects — imdb credits link */
 .imdb-credits-link {
-  display: inline-flex; align-items: center; gap: 8px;
-  margin-top: 18px;
+  display: flex; width: fit-content; align-items: center; gap: 8px;
+  margin: 18px auto 0;
   font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--ink-2); text-decoration: none;
   padding: 8px 14px 8px 10px;

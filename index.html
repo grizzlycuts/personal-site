@@ -2,15 +2,25 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
+  <!-- Content Security Policy. Note: script-src needs 'unsafe-inline'/'unsafe-eval'
+       because @babel/standalone compiles the JSX in-browser and runs it as injected
+       inline <script> elements (the site's intentional no-build architecture). The
+       CSP is therefore defense-in-depth: it pins script/style/font origins to this
+       site + unpkg + Google Fonts, restricts img to self+data:, locks connect-src to
+       'self' (no third-party exfiltration), and disables plugins/base-tag hijacking.
+       Some headers (X-Frame-Options/frame-ancestors, X-Content-Type-Options, HSTS)
+       can't be set this way and need real HTTP headers — not available on GitHub Pages. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Khoren Mirzakhanian — Colorist & Wingsuit Camera Flyer</title>
+  <title>Khoren Mirzakhanian — Picture Finishing & Aerial Photography</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=EB+Garamond:wght@500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Spectral:wght@500&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="css/site.css?v=14" />
-  <link rel="stylesheet" href="css/components.css?v=46" />
+  <link rel="stylesheet" href="css/site.css?v=16" />
+  <link rel="stylesheet" href="css/components.css?v=51" />
 </head>
 <body>
   <div id="root"></div>
@@ -19,12 +29,12 @@
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
-  <script src="image-slot.js?v=14"></script>
-  <script src="js/data.js?v=20"></script>
+  <script src="image-slot.js?v=13"></script>
+  <script src="js/data.js?v=21"></script>
   <script type="text/babel" src="tweaks-panel.jsx?v=7"></script>
-  <script type="text/babel" src="js/components.jsx?v=22"></script>
-  <script type="text/babel" src="js/pages-main.jsx?v=25"></script>
-  <script type="text/babel" src="js/pages-sub.jsx?v=22"></script>
+  <script type="text/babel" src="js/components.jsx?v=26"></script>
+  <script type="text/babel" src="js/pages-main.jsx?v=29"></script>
+  <script type="text/babel" src="js/pages-sub.jsx?v=24"></script>
   <script type="text/babel" src="js/app.jsx?v=15"></script>
 </body>
 </html>

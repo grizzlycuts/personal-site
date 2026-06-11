@@ -8,8 +8,8 @@ window.SITE = {
     monogram: "KM",
     location: "Los Angeles, CA",
     roles: [
-      { label: "Colorist & Editor", kind: "color" },
-      { label: "Wingsuit Camera Flyer", kind: "flight" },
+      { label: "Picture Finishing", kind: "color" },
+      { label: "Aerial Photography", kind: "flight" },
     ],
     tagline: "Under construction. Coming soon.",
     email: "khoren@kolorlux.com",

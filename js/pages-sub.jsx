@@ -68,9 +68,8 @@ function Lightbox({ photos, index, setIndex }) {
           <button className="lb-nav prev" onClick={(e) => { e.stopPropagation(); setIndex((index - 1 + photos.length) % photos.length); }}><Chevron d="left" s={18} /></button>
           <button className="lb-nav next" onClick={(e) => { e.stopPropagation(); setIndex((index + 1) % photos.length); }}><Chevron d="right" s={18} /></button>
           <div className="lightbox-inner" onClick={(e) => e.stopPropagation()}>
-            {(window.imageSlotStore && window.imageSlotStore.get("album-" + p.id))
-              ? <img className="lb-photo" src={window.imageSlotStore.get("album-" + p.id)} alt={p.title} />
-              : <Slot id={"album-" + p.id} ar="3 / 2" fit="contain" ph={"Drop frame — " + p.title} style={{ width: "100%", aspectRatio: "3 / 2", maxHeight: "82vh", background: "transparent" }} />}
+            {window.imageSlotStore && window.imageSlotStore.get("album-" + p.id) &&
+              <img className="lb-photo" src={window.imageSlotStore.get("album-" + p.id)} alt={p.title} />}
           </div>
         </>
       )}
@@ -85,28 +84,31 @@ function Lightbox({ photos, index, setIndex }) {
 
 function Album({ go, profile }) {
   const [index, setIndex] = useS2(null);
+  const [, force] = useS2(0);
   const all = window.SITE.photos;
-  const photos = all;
+
+  useE2(() => {
+    if (!window.imageSlotStore) return;
+    window.imageSlotStore.ensure();
+    return window.imageSlotStore.subscribe(() => force(n => n + 1));
+  }, []);
+
+  const photos = all.filter(p => window.imageSlotStore && window.imageSlotStore.get("album-" + p.id));
+
   return (
     <main className="page">
-      <PageHead kicker="Album">
+      <PageHead kicker="Photos">
       </PageHead>
       <section className="wrap-wide" style={{ paddingBottom: "clamp(60px,9vw,120px)" }}>
         <div className="album-grid">
-          {photos.map((p) => {
-            const realIdx = all.indexOf(p);
-            return (
-              <div className="album-item reveal" key={p.id} onClick={(e) => {
-                const slot = e.currentTarget.querySelector("image-slot");
-                if (slot && slot.hasAttribute("data-filled")) setIndex(realIdx);
-              }}>
-                <Slot id={"album-" + p.id} ar={p.ar} fit="native" ph={p.cat === "flight" ? "Drop flight frame" : "Drop still / grade"} />
-              </div>
-            );
-          })}
+          {photos.map((p, i) => (
+            <div className="album-item reveal" key={p.id} onClick={() => setIndex(i)}>
+              <Slot id={"album-" + p.id} ar={p.ar} fit="native" />
+            </div>
+          ))}
         </div>
       </section>
-      <Lightbox photos={all} index={index} setIndex={setIndex} />
+      <Lightbox photos={photos} index={index} setIndex={setIndex} />
       <Footer profile={profile} go={go} />
     </main>
   );
@@ -215,7 +217,15 @@ function Links({ go, profile }) {
 
 /* ---------------- PROJECTS ---------------- */
 function Projects({ go, profile }) {
+  const [, force] = useS2(0);
   const profileUrl = window.SITE.imdbProfile;
+
+  useE2(() => {
+    if (!window.imageSlotStore) return;
+    window.imageSlotStore.ensure();
+    return window.imageSlotStore.subscribe(() => force(n => n + 1));
+  }, []);
+
   return (
     <main className="page">
       <PageHead>
@@ -225,32 +235,36 @@ function Projects({ go, profile }) {
           <ArrowR s={14} />
         </a>
       </PageHead>
-      {window.SITE.projectGroups.map((group, gi) => (
-        <section key={group.role} className="wrap-wide"
-          style={{ paddingTop: gi === 0 ? 0 : "clamp(20px,3vw,40px)", paddingBottom: "clamp(40px,7vw,90px)" }}>
-          <h2 className="project-role-head reveal">{group.role}</h2>
-          <div className="projects-grid">
-            {group.films.map((p) => (
-              <a
-                key={p.id}
-                className="project-card"
-                href={p.imdb ? "https://www.imdb.com/title/" + p.imdb + "/" : profileUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={p.title + " — IMDb"}
-              >
-                <div className="project-poster">
-                  <Slot id={"project-" + p.id} ar="2 / 3" ph={p.title} />
-                </div>
-                <div className="project-info">
-                  <div className="project-title serif">{p.title}</div>
-                  {p.year && <div className="project-year mono">{p.year}</div>}
-                </div>
-              </a>
-            ))}
-          </div>
-        </section>
-      ))}
+      {window.SITE.projectGroups.map((group, gi) => {
+        const films = group.films.filter(p => window.imageSlotStore && window.imageSlotStore.get("project-" + p.id));
+        if (!films.length) return null;
+        return (
+          <section key={group.role} className="wrap-wide"
+            style={{ paddingTop: gi === 0 ? 0 : "clamp(20px,3vw,40px)", paddingBottom: "clamp(40px,7vw,90px)" }}>
+            <h2 className="project-role-head reveal">{group.role}</h2>
+            <div className="projects-grid">
+              {films.map((p) => (
+                <a
+                  key={p.id}
+                  className="project-card"
+                  href={p.imdb ? "https://www.imdb.com/title/" + p.imdb + "/" : profileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={p.title + " — IMDb"}
+                >
+                  <div className="project-poster">
+                    <Slot id={"project-" + p.id} ar="2 / 3" />
+                  </div>
+                  <div className="project-info">
+                    <div className="project-title serif">{p.title}</div>
+                    {p.year && <div className="project-year mono">{p.year}</div>}
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
+        );
+      })}
       <Footer profile={profile} go={go} />
     </main>
   );

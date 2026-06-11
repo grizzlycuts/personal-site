@@ -1,7 +1,9 @@
 # Personal Website — Khoren Mirzakhanian
 
-A cinematic personal site ("The Grade & The Sky") for a **colorist/editor +
-wingsuit camera flyer**. Earthy/muted palette, elegant serif (Cormorant
+A cinematic personal site ("The Grade & The Sky") for a colorist/editor +
+wingsuit camera flyer — public-facing role labels are **"Picture Finishing"**
+and **"Aerial Photography"** (`profile.roles` in js/data.js + the `<title>`
+tag; owner request). Earthy/muted palette, elegant serif (Cormorant
 Garamond) + Hanken Grotesk body + JetBrains Mono metadata. Originally mocked up
 in Claude Design, implemented here as a static React-via-CDN site (no build
 step — React UMD + Babel standalone in the browser).
@@ -29,9 +31,9 @@ step — React UMD + Babel standalone in the browser).
 ## Cache-busting
 Every script/style in `index.html` is loaded with `?v=N`. **Bump the version
 whenever you edit that file** or a browser may serve a stale cached copy.
-Current: site.css v14, components.css v48, image-slot v13, data.js v20,
-tweaks-panel v7, components.jsx v24, pages-main.jsx v25, pages-sub.jsx v24,
-app.jsx v15.
+Current: site.css v16, components.css v51, image-slot v14, data.js v21,
+tweaks-panel v7, components.jsx v26, pages-main.jsx v30, pages-sub.jsx v24,
+app.jsx v15. (If these drift, `index.html` is the truth — update this list.)
 
 ## Active vs hidden pages (site under construction)
 Active nav: **Photos · Films · Now · Links · Contact**, with the splash as the
@@ -82,16 +84,25 @@ lightbox uses a plain `<img class="lb-photo">` at natural aspect, scaled up to
   to `scale(1)` on hover (0.55s). Tagline = `window.SITE.profile.tagline`
   ("Under construction. Coming soon.").
 - **Background slideshow** behind a light **frosted-glass veil** (`.splash-veil`,
-  `blur(4px)`, gradient-masked: small soft band behind top kickers + larger band
-  behind the lower text). Order is shuffled once per mount. Tweaks → Splash →
-  Treatment toggles slideshow / single photo.
-- **Dynamic foreground contrast:** JS samples the brightness of the photo behind
-  the lower-left text (`regionBrightness`) and tags `.splash` `.bg-dark` (light
-  ink) / `.bg-light` (softened dark ink) so type never gets lost. Threshold 0.52.
-- **"Enter the site" disabled** (under construction): `.btn-blocked` —
-  hazard diagonals, `pointer-events:none`, no `onClick`. "Selected work" ghost
-  button works (`go("album")`). Re-enable by restoring `onClick={()=>go("home")}`
-  and dropping the wrapper/class.
+  `blur(3.1px)`, gradient-masked: small soft band behind top kickers + larger
+  band behind the lower text, bottom tint 24%). Order is shuffled once per
+  mount. Tweaks → Splash → Treatment toggles slideshow / single photo.
+  Sidecars hydrate **progressively** (one notify per file, album ids first —
+  see image-slot.js `hydrate()`); `availableShots` filters to hydrated slots,
+  so the slideshow snaps to the first loaded photo on its own — do NOT add a
+  "seek" effect for this (a broken one once blanked the whole site, PR #19).
+- **Text legibility** (three layers): (1) always-on subtle `--splash-scrim`
+  text-shadow, strengthened on `.bg-dark`, none on `.bg-light`; (2) film-style
+  dark rgba vignette (bottom + left, inline gradient in pages-main.jsx) that
+  works on any photo regardless of theme; (3) **dynamic contrast** — JS samples
+  brightness behind the lower-left text (`regionBrightness`) and tags `.splash`
+  `.bg-dark` (light ink) / `.bg-light` (softened dark ink). Threshold 0.52.
+- **Buttons — two-tier layout:** "Enter the site" is a full-width primary,
+  **disabled** while under construction (`.btn-blocked` — hazard diagonals,
+  `pointer-events:none`, no `onClick`; re-enable by restoring
+  `onClick={()=>go("home")}` and dropping the wrapper/class). Below it an
+  equal-width ghost pair: **"Selected work"** → `go("projects")` (left) and
+  **"Gallery"** (camera icon) → `go("album")` (right).
 
 ## Running timecode
 Live SMPTE timecode anchored to one session epoch (`TC_EPOCH`) so every instance
@@ -99,7 +110,12 @@ stays in sync and continuous across navigation. Floats fixed top-center on every
 page except splash (`.tc-top`, z-index 300); also in the splash + footer.
 
 ## Social icon buttons (`SocialIcons`/`SOCIALS`, js/components.jsx)
-Row of 4 circular icon buttons (Instagram, IMDb, LinkedIn, Email) in the splash.
+Row of 4 circular icon buttons (Instagram, IMDb, LinkedIn, Email) in the splash,
+52px, spread with `justify-content: space-between` to span the button block's
+width, with a **registration-mark crosshair separator** (`SocialSep`, 11px SVG,
+`aria-hidden`, `pointer-events:none`) centered in each gap. Styles live in
+**css/site.css** (`.social-row`/`.social-btn`/`.social-sep`), NOT components.css;
+the only piece in components.css is the `.bg-dark` adaptive ink for the sep.
 NOTE: in a sandboxed preview iframe Instagram/LinkedIn appear "blocked"
 (`X-Frame-Options: DENY`) — a preview artifact only; they open fine in a real tab.
 
@@ -121,3 +137,15 @@ Dean Koontz". (Edit in `js/data.js` `now`.)
 ## Album / lightbox copy stripped (owner request)
 The album hover-over caption overlay and the lightbox title/subtitle/shot-info
 were removed — the album shows photos clean, the lightbox shows just the photo.
+
+## Deploy (GitHub Pages → www.kolorlux.com)
+`.github/workflows/pages.yml` assembles a clean `_site/` (site files + photo
+sidecars + `.nojekyll`; never `chats/`, `project/`, or CLAUDE.md) and deploys
+on every push to main. `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true` is set at
+workflow level (Node 20 actions deprecated June 2026). A broken push to main
+blanks the LIVE site immediately — there is no staging. Lesson from PR #19:
+a `ReferenceError` in any JSX file (e.g. a misnamed variable) crashes the
+entire React tree → blank page for all visitors; sanity-check identifiers
+against the file you're editing, and always bump `?v=N` for every file touched.
+Note: the kolorlux.com domain is unreachable from the Claude sandbox (network
+policy 403) — verify deploys via the Actions run status instead of curl.

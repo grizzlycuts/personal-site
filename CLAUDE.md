@@ -4,7 +4,9 @@ A cinematic personal site ("The Grade & The Sky") for a colorist/editor +
 wingsuit camera flyer — public-facing role labels are **"Picture Finishing"**
 and **"Aerial Photography"** (`profile.roles` in js/data.js + the `<title>`
 tag; owner request). Earthy/muted palette, elegant serif (Cormorant
-Garamond) + Hanken Grotesk body + JetBrains Mono metadata. Originally mocked up
+Garamond) + Hanken Grotesk body + JetBrains Mono metadata. **Dark mode is the
+default** (`data-theme="dark"` on `<html>` + `TWEAK_DEFAULTS.theme="dark"` in
+app.jsx; existing visitors keep their localStorage preference). Originally mocked up
 in Claude Design, implemented here as a static React-via-CDN site (no build
 step — React UMD + Babel standalone in the browser).
 
@@ -33,7 +35,7 @@ Every script/style in `index.html` is loaded with `?v=N`. **Bump the version
 whenever you edit that file** or a browser may serve a stale cached copy.
 Current: site.css v16, components.css v51, image-slot v14, data.js v21,
 tweaks-panel v7, components.jsx v26, pages-main.jsx v30, pages-sub.jsx v24,
-app.jsx v15. (If these drift, `index.html` is the truth — update this list.)
+app.jsx v16. (If these drift, `index.html` is the truth — update this list.)
 
 ## Active vs hidden pages (site under construction)
 Active nav: **Photos · Films · Now · Links · Contact**, with the splash as the

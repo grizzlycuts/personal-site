@@ -149,3 +149,27 @@ entire React tree → blank page for all visitors; sanity-check identifiers
 against the file you're editing, and always bump `?v=N` for every file touched.
 Note: the kolorlux.com domain is unreachable from the Claude sandbox (network
 policy 403) — verify deploys via the Actions run status instead of curl.
+Root-level static files shipped by the workflow's `cp` line (besides the JS/CSS
+and photo sidecars): `index.html image-slot.js tweaks-panel.jsx robots.txt
+sitemap.xml og-image.jpg`. Add any new root asset to that line or it won't deploy.
+
+## Analytics & SEO (all in `index.html` <head>)
+- **Google Analytics 4** — Measurement ID `G-YJNE8XX3H1`. Standard gtag snippet
+  PLUS a `hashchange` listener that fires a `page_view` per route (the site is a
+  hash-routed SPA, so without it only the initial landing is counted). GA needs
+  CSP allowances: `googletagmanager.com` in `script-src`; `*.google-analytics.com`
+  + `*.googletagmanager.com` in `connect-src` and `img-src`.
+- **SEO tags:** meta `description`, `<link rel=canonical>`, Open Graph block,
+  Twitter card (`summary_large_image`), and a JSON-LD `Person` schema (name, job
+  titles, Kolorlux, LA, sameAs → IMDb/Instagram/LinkedIn).
+- **Social thumbnail:** `og-image.jpg` (1200×630, the standard 1.91:1) referenced
+  by `og:image` + `twitter:image`. It was cropped from an owner-supplied aerial
+  photo via Pillow (no ImageMagick/ffmpeg in the sandbox — `pip install Pillow`).
+  NOTE: a pasted image is NOT written to the working dir; recover its bytes from
+  the session transcript JSONL (base64 under message.content[].source.data).
+- **Crawl files:** `robots.txt` (allow all + sitemap pointer) and `sitemap.xml`
+  (single root URL — hash fragments aren't separate URLs to crawlers).
+- Owner still needs to submit the sitemap in Google Search Console, and social
+  platforms cache OG data — use each platform's re-scrape/debugger after deploy.
+- Real page copy is still pending (tagline = "Under construction") — the biggest
+  remaining SEO lever is actual content, not more tags.

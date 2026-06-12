@@ -15,7 +15,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "accent": "oklch(0.58 0.085 45)",
   "serif": "Cormorant Garamond",
   "splash": "slideshow",
-  "theme": "light"
+  "theme": "dark"
 }/*EDITMODE-END*/;
 
 const ACCENTS = [
